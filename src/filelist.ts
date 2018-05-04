@@ -36,7 +36,7 @@ interface Options {
 let stack: Array<File> = [];
 
 function main(start: string, options?: Options): string {
-  start = path.resolve(__dirname, start);
+  // start = path.resolve(__dirname, start);
   let fileContent: string = '';
   let ignorePath: string[] = [];
   let stats: fs.Stats = fs.statSync(start);

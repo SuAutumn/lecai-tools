@@ -3,15 +3,15 @@ import path = require('path');
 import fs = require('fs');
 import { fstat } from 'fs';
 
-const START: string = path.resolve(__dirname, '../../../work/lecai-vue-trunk/eLearningH5.01/src');
+const START: string = 'E:/vue-h5/src';
 
-const LANG: string = path.resolve(__dirname, '../../../work/lecai-vue-trunk/eLearningH5.01/src/language.js');
+const LANG: string = 'E:/vue-h5/src/language.json';
 
 
 let tStr: string = fileContent(START, {
   ignore: [
     'assets',
-    'language.js',
+    'language.json',
     'components/view/exam',
     'components/view/training',
     'language',
@@ -60,7 +60,7 @@ function search(lang: Lang): Lang {
   }
   for (let i in lang.message) {
     if (checkPreserveKey(i) && tStr.indexOf(i) === -1) {
-      // console.log(i)
+      console.log(i)
     } else {
       newLang.message[i] = lang.message[i]
     }
