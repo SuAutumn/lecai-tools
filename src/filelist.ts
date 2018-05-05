@@ -1,5 +1,6 @@
 import fs = require('fs')
 import path = require('path')
+import { filelist } from './types/global'
 
 function read(location: string): Function {
   return (): string => fs.readFileSync(location, 'utf-8')
@@ -11,7 +12,7 @@ function ls(location: string): void {
   });
   files.forEach(file => {
     let stats: fs.Stats = fs.statSync(file);
-    stack.push(<File>{
+    stack.push(<filelist.File>{
       ls: ls,
       read: read(file),
       isFile: stats.isFile(),
@@ -21,21 +22,9 @@ function ls(location: string): void {
   })
 }
 
-interface File {
-  read: () => string;
-  ls: (path: string) => string[];
-  path: string;
-  isFile: boolean;
-  isDir: boolean;
-}
+let stack: Array<filelist.File> = [];
 
-interface Options {
-  ignore: string[]; // 读取文件的时候忽略的文件和目录
-}
-
-let stack: Array<File> = [];
-
-function main(start: string, options?: Options): string {
+function main(start: string, options?: filelist.Options): string {
   // start = path.resolve(__dirname, start);
   let fileContent: string = '';
   let ignorePath: string[] = [];
@@ -65,9 +54,7 @@ function main(start: string, options?: Options): string {
       }
       if (node.isFile) {
         fileContent += node.read()
-      }
-
-      if (node.isDir) {
+      } else {
         ls(node.path)
       }
     }

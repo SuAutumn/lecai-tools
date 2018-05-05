@@ -2,6 +2,7 @@ import fileContent from './filelist'
 import path = require('path');
 import fs = require('fs');
 import { fstat } from 'fs';
+import { index } from './types/global';
 
 const START: string = 'E:/vue-h5/src';
 
@@ -20,19 +21,7 @@ let tStr: string = fileContent(START, {
 });
 let lang: string = fileContent(LANG);
 
-interface Lang {
-  message: {
-    [x: string]: string
-  }
-}
-
-interface I18n {
-  ch: Lang;
-  en: Lang;
-  ha: Lang;
-}
-
-let {ch, en, ha} = <I18n>(JSON.parse(lang));
+let {ch, en, ha} = <index.I18n>(JSON.parse(lang));
 
 // 保留字段
 const PRESERVEKEY: string[] = [
@@ -54,8 +43,8 @@ function checkPreserveKey(key: string): boolean {
   })
 }
 
-function search(lang: Lang): Lang {
-  let newLang: Lang = {
+export function search(lang: index.Lang): index.Lang {
+  let newLang: index.Lang = {
     message: {}
   }
   for (let i in lang.message) {
@@ -68,18 +57,19 @@ function search(lang: Lang): Lang {
   return newLang
 }
 
-function format(newLang: Lang, type: string): string {
+export function format(newLang: index.Lang, type: string): string {
   let str = JSON.stringify(newLang);
   str = `const locales={${type}:${str}}\nexport {locales}`;
   return str.replace(/'/g, "\\'").replace(/"/g, "'");
 }
 
-function write(path: string, data: string): void {
+export function write(path: string, data: string): void {
   fs.writeFile(path, data, 'utf-8', err => {
     if (err) console.log(err);
     console.log('ok.')
   })
 }
+
 
 write('./ch.js', format(search(ch), 'ch'))
 write('./en.js', format(search(en), 'en'))
