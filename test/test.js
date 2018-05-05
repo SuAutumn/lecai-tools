@@ -1,7 +1,7 @@
 module.exports = {
-  entry: 'E:/vue-h5/src',
-  outDir: 'E:/vue-h5/src/language',
-  baseSample: 'E:/vue-h5/src/language.json',
+  entry: './src',
+  outDir: './src/language',
+  baseSample: './src/language.json',
   // 保留字段
   preserveKeys: [
     'global.',

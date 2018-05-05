@@ -6,7 +6,8 @@
 
 * 使用
 
-  lecai-tools --config 配置文件.js
+  * lecai-tools --config 配置文件.js
+  * 只支持CommonJs方式调用
 
 * 配置文件格式
 
@@ -19,3 +20,8 @@
     ignoreFileOrDirRelativePath: string[]; // 扫描忽略文件(夹)，entry相对路径
   }
   ```
+
+  * TODO
+
+    * 自动请求国际化文档
+    * 增加扩展老文档

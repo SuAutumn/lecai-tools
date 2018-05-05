@@ -1,6 +1,6 @@
 {
   "name": "lecai-tools",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "little tools for yxt project",
   "main": "./dist/index.js",
   "scripts": {

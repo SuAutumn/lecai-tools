@@ -2,21 +2,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var filelist_1 = require("./filelist");
+var path = require("path");
 var fs = require("fs");
 var START = '';
 var LANG = '';
 var IGNORE = [];
 var PRESERVEKEY = [];
+var OUTDIR = '';
+var cwd = process.cwd();
+var absPath = function (relative) {
+    return path.resolve(cwd, relative);
+};
 if (process.argv[2] === '--config' && process.argv[3]) {
-    var config = require(process.argv[3]);
-    START = config.entry;
-    LANG = config.baseSample;
+    var config = require(absPath(process.argv[3]));
+    START = absPath(config.entry);
+    LANG = absPath(config.baseSample);
     IGNORE = config.ignoreFileOrDirRelativePath;
     PRESERVEKEY = config.preserveKeys;
-    console.log(config);
+    OUTDIR = absPath(config.outDir);
 }
 else {
-    console.log('lecai --config xx.js');
+    console.log('参数不正确，请参照README.md使用方法');
     process.exit(1);
 }
 var tStr = filelist_1.default(START, {
@@ -24,7 +30,6 @@ var tStr = filelist_1.default(START, {
 });
 var lang = filelist_1.default(LANG);
 var _a = (JSON.parse(lang)), ch = _a.ch, en = _a.en, ha = _a.ha;
-// 检测字段是不是保留字段
 function checkPreserveKey(key) {
     return PRESERVEKEY.every(function (preKey) {
         return key.indexOf(preKey) !== 0;
@@ -59,6 +64,6 @@ function write(path, data) {
     });
 }
 exports.write = write;
-write('./ch.js', format(search(ch), 'ch'));
-write('./en.js', format(search(en), 'en'));
-write('./ha.js', format(search(ha), 'ha'));
+write(path.resolve(OUTDIR, './ch.js'), format(search(ch), 'ch'));
+write(path.resolve(OUTDIR, './en.js'), format(search(en), 'en'));
+write(path.resolve(OUTDIR, './ha.js'), format(search(ha), 'ha'));

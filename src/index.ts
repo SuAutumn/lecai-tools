@@ -12,14 +12,19 @@ let LANG: string = '';
 let IGNORE: string[] = [];
 let PRESERVEKEY: string[] = [];
 let OUTDIR: string = '';
+let cwd:string = process.cwd(); // 当前进程的目录
+let absPath: (path: string) => string = function (relative: string): string {
+  return path.resolve(cwd, relative)
+}
+
 
 if (process.argv[2] === '--config' && process.argv[3]) {
-  let config = <index.Config>require(process.argv[3]);
-  START = config.entry;
-  LANG = config.baseSample;
+  let config = <index.Config>require(absPath(process.argv[3]));
+  START = absPath(config.entry);
+  LANG = absPath(config.baseSample);
   IGNORE = config.ignoreFileOrDirRelativePath;
   PRESERVEKEY = config.preserveKeys;
-  OUTDIR = config.outDir;
+  OUTDIR = absPath(config.outDir);
 } else {
   console.log('参数不正确，请参照README.md使用方法');
   process.exit(1);

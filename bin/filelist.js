@@ -22,7 +22,6 @@ function ls(location) {
 }
 var stack = [];
 function main(start, options) {
-    // start = path.resolve(__dirname, start);
     var fileContent = '';
     var ignorePath = [];
     var stats = fs.statSync(start);
@@ -41,7 +40,6 @@ function main(start, options) {
         ls(start);
         while (stack.length > 0) {
             var node = stack.pop();
-            // 忽略不需要检查的文件
             if (ignorePath.indexOf(node.path) > -1) {
                 continue;
             }

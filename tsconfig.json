@@ -3,9 +3,12 @@
 	"exclude": [ "./node_modules" ],
 	"compilerOptions": {
     "outDir": "./bin/",
+    // "outFile": "index.js",
     "sourceMap": false,
     "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es5"
+    "target": "es5",
+    "strict": false,
+    "removeComments": true
   }
 }
