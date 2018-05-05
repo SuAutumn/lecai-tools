@@ -1,40 +1,36 @@
+#!/usr/bin/env node
+
 import fileContent from './filelist'
 import path = require('path');
 import fs = require('fs');
 import { fstat } from 'fs';
 import { index } from './types/global';
 
-const START: string = 'E:/vue-h5/src';
 
-const LANG: string = 'E:/vue-h5/src/language.json';
+let START: string = '';
+let LANG: string = '';
+let IGNORE: string[] = [];
+let PRESERVEKEY: string[] = [];
+let OUTDIR: string = '';
 
+if (process.argv[2] === '--config' && process.argv[3]) {
+  let config = <index.Config>require(process.argv[3]);
+  START = config.entry;
+  LANG = config.baseSample;
+  IGNORE = config.ignoreFileOrDirRelativePath;
+  PRESERVEKEY = config.preserveKeys;
+  OUTDIR = config.outDir;
+} else {
+  console.log('参数不正确，请参照README.md使用方法');
+  process.exit(1);
+}
 
 let tStr: string = fileContent(START, {
-  ignore: [
-    'assets',
-    'language.json',
-    'components/view/exam',
-    'components/view/training',
-    'language',
-    'HTone.js'
-  ]
+  ignore: IGNORE
 });
 let lang: string = fileContent(LANG);
 
 let {ch, en, ha} = <index.I18n>(JSON.parse(lang));
-
-// 保留字段
-const PRESERVEKEY: string[] = [
-  'global.',
-  'apis.',
-  'api.',
-  'posts.',
-  'name.',
-  'face.',
-  'advert.',
-  'apisorg.',
-  'pis.'
-]
 
 // 检测字段是不是保留字段
 function checkPreserveKey(key: string): boolean {
@@ -66,11 +62,11 @@ export function format(newLang: index.Lang, type: string): string {
 export function write(path: string, data: string): void {
   fs.writeFile(path, data, 'utf-8', err => {
     if (err) console.log(err);
-    console.log('ok.')
+    console.log(path, 'ok.');
   })
 }
 
 
-write('./ch.js', format(search(ch), 'ch'))
-write('./en.js', format(search(en), 'en'))
-write('./ha.js', format(search(ha), 'ha'))
+write(path.resolve(OUTDIR, './ch.js'), format(search(ch), 'ch'))
+write(path.resolve(OUTDIR, './en.js'), format(search(en), 'en'))
+write(path.resolve(OUTDIR, './ha.js'), format(search(ha), 'ha'))

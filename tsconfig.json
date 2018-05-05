@@ -2,8 +2,8 @@
 	"include": [ "./src/**/*" ],
 	"exclude": [ "./node_modules" ],
 	"compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
+    "outDir": "./bin/",
+    "sourceMap": false,
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "es5"
