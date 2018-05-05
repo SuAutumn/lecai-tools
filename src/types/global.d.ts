@@ -30,6 +30,6 @@ export declare namespace index {
     outDir: string; // 结果文件输出目录
     baseSample: string; // 样本比较
     preserveKeys: string[]; // 样本保留keys
-    ignoreFileOrDirRelativePath: string[]; // 扫描忽略文件(夹)
+    ignoreFileOrDirRelativePath: string[]; // 扫描忽略文件(夹)，entry相对路径
   }
 }

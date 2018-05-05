@@ -3,4 +3,3 @@ webpack.config.js
 tsconfig.json
 .gitattributes
 .gitignore
-test
