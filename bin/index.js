@@ -4,12 +4,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var filelist_1 = require("./filelist");
 var path = require("path");
 var fs = require("fs");
+var excel_1 = require("./excel");
 var START = '';
 var LANG = '';
 var IGNORE = [];
 var PRESERVEKEY = [];
 var OUTDIR = '';
 var cwd = process.cwd();
+var EXCELPATH = '';
+var EXTENDKEYS = {};
 var absPath = function (relative) {
     return path.resolve(cwd, relative);
 };
@@ -20,6 +23,8 @@ if (process.argv[2] === '--config' && process.argv[3]) {
     IGNORE = config.ignoreFileOrDirRelativePath;
     PRESERVEKEY = config.preserveKeys;
     OUTDIR = absPath(config.outDir);
+    EXCELPATH = absPath(config.excelPath);
+    EXTENDKEYS = config.extendKeys;
 }
 else {
     console.log('参数不正确，请参照README.md使用方法');
@@ -28,8 +33,13 @@ else {
 var tStr = filelist_1.default(START, {
     ignore: IGNORE
 });
-var lang = filelist_1.default(LANG);
-var _a = (JSON.parse(lang)), ch = _a.ch, en = _a.en, ha = _a.ha;
+var _a = excel_1.default(EXCELPATH), ch = _a.ch, en = _a.en, ha = _a.ha;
+for (var i in EXTENDKEYS) {
+    ch.message[i] = EXTENDKEYS[i];
+}
+var lang = {
+    ch: ch, en: en, ha: ha
+};
 function checkPreserveKey(key) {
     return PRESERVEKEY.every(function (preKey) {
         return key.indexOf(preKey) !== 0;
@@ -67,3 +77,4 @@ exports.write = write;
 write(path.resolve(OUTDIR, './ch.js'), format(search(ch), 'ch'));
 write(path.resolve(OUTDIR, './en.js'), format(search(en), 'en'));
 write(path.resolve(OUTDIR, './ha.js'), format(search(ha), 'ha'));
+write(LANG, JSON.stringify(lang));

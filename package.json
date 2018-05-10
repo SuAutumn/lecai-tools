@@ -23,5 +23,8 @@
   },
   "bin": {
     "lecai-tools": "bin/index.js"
+  },
+  "dependencies": {
+    "xlsx": "^0.12.12"
   }
 }
