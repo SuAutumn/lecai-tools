@@ -43,10 +43,10 @@ export default function main(path: string): index.I18n {
     for (let i = 2; i <= range; i++) {
       // 如果单元格值为空，则弄下一个
       if (!sheet['A' + i]) continue;
-      let key = sheet['A' + i]['v'];
-      ch.message[key] =  sheet['B' + i]['v'];
-      en.message[key] =  sheet['C' + i]['v'];
-      ha.message[key] =  sheet['D' + i]['v'];
+      let key = <string>sheet['A' + i]['v'].trim().replace('/\r\n/g', '');
+      ch.message[key] =  <string>sheet['B' + i]['v'].trim().replace('/\r\n/g', '');
+      en.message[key] =  <string>sheet['C' + i]['v'].trim().replace('/\r\n/g', '');
+      ha.message[key] =  <string>sheet['D' + i]['v'].trim().replace('/\r\n/g', '');
     }
   }
   return lang;
