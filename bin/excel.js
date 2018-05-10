@@ -31,10 +31,10 @@ function main(path) {
         for (var i = 2; i <= range; i++) {
             if (!sheet['A' + i])
                 continue;
-            var key = sheet['A' + i]['v'];
-            ch.message[key] = sheet['B' + i]['v'];
-            en.message[key] = sheet['C' + i]['v'];
-            ha.message[key] = sheet['D' + i]['v'];
+            var key = sheet['A' + i]['v'].trim().replace('/\r\n/g', '');
+            ch.message[key] = sheet['B' + i]['v'].trim().replace('/\r\n/g', '');
+            en.message[key] = sheet['C' + i]['v'].trim().replace('/\r\n/g', '');
+            ha.message[key] = sheet['D' + i]['v'].trim().replace('/\r\n/g', '');
         }
     }
     return lang;
