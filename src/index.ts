@@ -3,8 +3,8 @@
 import fileContent from './filelist'
 import path = require('path');
 import fs = require('fs');
-import { fstat } from 'fs';
-import { index } from './types/global';
+import {fstat} from 'fs';
+import {index} from './types/global';
 
 
 let START: string = '';
@@ -12,7 +12,7 @@ let LANG: string = '';
 let IGNORE: string[] = [];
 let PRESERVEKEY: string[] = [];
 let OUTDIR: string = '';
-let cwd:string = process.cwd(); // 当前进程的目录
+let cwd: string = process.cwd(); // 当前进程的目录
 let absPath: (path: string) => string = function (relative: string): string {
   return path.resolve(cwd, relative)
 }
