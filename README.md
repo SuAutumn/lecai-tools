@@ -18,10 +18,12 @@
     baseSample: string; // 样本比较
     preserveKeys: string[]; // 样本保留keys
     ignoreFileOrDirRelativePath: string[]; // 扫描忽略文件(夹)，entry相对路径
+    excelPath: string; // excel文件目录路径
+    extendKeys: Json; // 扩展老key
   }
   ```
 
   * TODO
 
-    * 自动请求国际化文档
-    * 增加扩展老文档
+    * ~~自动请求国际化文档~~
+    * ~~增加扩展老文档~~
