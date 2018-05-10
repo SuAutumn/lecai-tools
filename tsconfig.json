@@ -9,6 +9,7 @@
     "module": "commonjs",
     "target": "es5",
     "strict": false,
-    "removeComments": true
+    "removeComments": true,
+    "watch": true
   }
 }
