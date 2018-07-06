@@ -2,8 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var path = require("path");
+var HtmlParse_1 = require("./HtmlParse");
+var unTrans = {};
+exports.unTrans = unTrans;
 function read(location) {
-    return function () { return fs.readFileSync(location, 'utf-8'); };
+    return function () {
+        unTrans.filename = new HtmlParse_1.default(location).isChArray;
+        return fs.readFileSync(location, 'utf-8');
+    };
 }
 function ls(location) {
     var files = fs.readdirSync(location).map(function (filename) {

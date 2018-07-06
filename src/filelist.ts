@@ -1,9 +1,19 @@
 import fs = require('fs')
 import path = require('path')
 import { filelist } from './types/global'
+import HtmlParse from './HtmlParse'
+
+interface SearchChinese {
+  [filename: string]: Array<string>
+}
+
+let unTrans: SearchChinese = {}
 
 function read(location: string): Function {
-  return (): string => fs.readFileSync(location, 'utf-8')
+  return (): string => {
+    unTrans.filename = new HtmlParse(location).isChArray
+    return fs.readFileSync(location, 'utf-8')
+  }
 }
 
 function ls(location: string): void {
@@ -63,3 +73,4 @@ function main(start: string, options?: filelist.Options): string {
 }
 
 export default main
+export { unTrans }
